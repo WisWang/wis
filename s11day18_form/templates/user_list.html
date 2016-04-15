@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user_list</title>
+</head>
+<body>
+<form action="/user_list/" method="post">
+    <p>host:{{ obj.host }}<span style="color:red">{{ errors.host }}</span></p>
+    <p>port:{{ obj.port }}<span style="color:red">{{ errors.port }}</span></p>
+    <p>email:{{ obj.email }}<span style="color:red">{{ errors.email }}</span></p>
+    <p>mobile:{{ obj.mobile }}<span style="background-color:red">{{ errors.mobile }}</span></p>
+    <span style="color:red">hello</span>
+    <input type="submit" value="提交"/>
+</form>
+    <br>
+    <br>
+    <br>
+    <br>
+<input type="button" value="ajax_提交" onclick="Ajax_p()" />
+<input type="button" value="ajax_SET" onclick="AjaxSet()" />
+<input type="button" value="ajax_提交_SET" onclick="AjaxSubmitSet()" />
+<table border="1px">
+    <thead>
+        <tr>
+            <td>主机名</td>
+            <td>端口</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>wis</td>
+            <td>1900</td>
+        </tr>
+        <tr>
+            <td>nar</td>
+            <td>1900</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<script type="text/javascript" src="/static/jquery-2.2.2.js"></script>
+<script>
+    function Ajax_p(){
+        host="wis";
+        port="1236";
+        $.ajax({
+            url:"/ajax_data/",
+            method:"POST",
+            data:{h:host,p:port},
+            success:function (arg){
+
+            }
+        })
+    }
+   function AjaxSubmitSet(){
+            var array_users= [
+                {'username': 'alex', 'age': 18},
+                {'username': 'rain', 'age': 16},
+                {'username': 'eric', 'age': 17}
+            ];
+            $.ajax({
+                url: "/ajax_data_set/",
+                type: 'POST',
+                tradition: true,
+                data: {data: JSON.stringify(array_users)},
+                success: function(arg){
+                    // json.loads
+                    var callback_dict = $.parseJSON(arg);
+                    if(callback_dict.status){
+                        alert('成功');
+                    }else{
+                        alert(callback_dict.error);
+                    }
+                }
+            });
+        }
+   function AjaxSet(){
+        var array_users= [
+                {'username': 'alex', 'age': 18},
+                {'username': 'rain', 'age': 16},
+                {'username': 'eric', 'age': 17}
+            ];
+        $.ajax({
+            url:"/ajax_data_set/",
+            method:"POST",
+            tradition:true,
+            data:{data:JSON.stringify(array_users)},
+            success:function (arg){
+                //var ret_data=$.parseJSON(arg);
+                var ret_data=JSON.parse(arg);
+                if(ret_data.status){
+                    alert('成功');
+                }
+                else{
+                    alert(ret_data.error);
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

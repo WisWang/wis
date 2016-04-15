@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<div style="z-index: 1;right:10px;display:inline">name: {{ username }}</div>
+<form action="/login/" method="post">
+    <p>用户名：<input type="text" name="username"/></p>
+    <p>密码<input type="text" name="pwd"/></p>
+    <p><input type="submit" value="提交"/></p>
+
+</form>
+</body>
+</html>
