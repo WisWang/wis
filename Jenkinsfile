@@ -35,7 +35,6 @@ pipeline {
                 error 'nar'
               } catch (e) {
                   currentBuild.result = 'SUCCESS'
-                  throw e
               } finally {
                   echo 'need success'
               }
