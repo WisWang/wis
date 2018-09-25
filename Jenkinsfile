@@ -26,7 +26,7 @@ pipeline {
     }
     stage('deploy') {
       steps {
-        echo '123'
+        echo 'failed fffff'
       }
     }
   }
