@@ -37,7 +37,21 @@ pipeline {
     }
     stage('post') {
       steps {
-        catchError()
+        script {
+          try {
+            // run tests in the same workspace that the project was built
+            error 'nar'
+          } catch (e) {
+            // if any exception occurs, mark the build as failed
+            currentBuild.result = 'SUCCESS'
+            throw e
+          } finally {
+            // perform workspace cleanup only if the build have passed
+            // if the build has failed, the workspace will be kept
+            echo 'need success'
+          }
+        }
+
       }
     }
   }
