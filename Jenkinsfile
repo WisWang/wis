@@ -21,10 +21,24 @@ pipeline {
       }
     }
     stage('p2tp') {
+      parallel {
+        stage('p2tp') {
+          steps {
+            echo 'dfd'
+            sleep 1
+            error 'nar'
+          }
+        }
+        stage('p2tf') {
+          steps {
+            sh 'date'
+          }
+        }
+      }
+    }
+    stage('post') {
       steps {
-        echo 'dfd'
-        sleep 1
-        error 'nar'
+        catchError()
       }
     }
   }
