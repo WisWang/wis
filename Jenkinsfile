@@ -6,5 +6,11 @@ pipeline {
         sh 'df -h'
       }
     }
+    stage('wis2') {
+      agent any
+      steps {
+        sleep 3
+      }
+    }
   }
 }
