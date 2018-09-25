@@ -5,7 +5,6 @@ pipeline {
       parallel {
         stage('test') {
           steps {
-            node(label: 'any')
             echo 'hello'
             catchError() {
               echo '123'
