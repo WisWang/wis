@@ -2,14 +2,29 @@ pipeline {
   agent any
   stages {
     stage('testp') {
-      steps {
-        sh 'df -h'
+      parallel {
+        stage('testp') {
+          steps {
+            sh 'df -h'
+          }
+        }
+        stage('ttt22') {
+          steps {
+            sh 'echo "hello"'
+          }
+        }
+        stage('tttva') {
+          steps {
+            echo 'va'
+          }
+        }
       }
     }
-    stage('wis2') {
-      agent any
+    stage('p2tp') {
       steps {
-        sleep 3
+        echo 'dfd'
+        sleep 1
+        error 'nar'
       }
     }
   }
