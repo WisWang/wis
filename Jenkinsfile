@@ -1,32 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
-      parallel {
-        stage('test') {
-          steps {
-            echo 'hello'
-            catchError() {
-              echo '123'
-              echo '444'
-              waitUntil() {
-                echo '123'
-              }
-
-            }
-
-          }
-        }
-        stage('testp') {
-          steps {
-            sh 'df -h'
-          }
-        }
-      }
-    }
-    stage('deploy') {
+    stage('testp') {
       steps {
-        echo 'failed fffff'
+        sh 'df -h'
       }
     }
   }
