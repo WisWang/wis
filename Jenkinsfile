@@ -31,6 +31,14 @@ pipeline {
                 for (int i = 0; i < browsers.size(); ++i) {
                     echo "Testing the ${browsers[i]} browser"
                 }
+                try {
+                error 'nar'
+              } catch (e) {
+                  currentBuild.result = 'SUCCESS'
+                  throw e
+              } finally {
+                  echo 'need success'
+              }
             }
           }
         }
