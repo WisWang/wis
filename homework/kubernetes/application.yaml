@@ -23,9 +23,9 @@ spec:
           name: app-volume
       containers:
       - name: app1
-        image: jmalloc/echo-server
+        image: nginx
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         volumeMounts:
         - mountPath: /opt/
           name: app-volume
@@ -39,6 +39,6 @@ metadata:
   name: app1
 spec:
   ports:
-    - port: 8080
+    - port: 80
   selector:
     app: app1
