@@ -5,8 +5,10 @@ node {
     def tagName='wis.com/frog/flask-demo:'+env.BUILD_NUMBER
 
     stage('docker image build') {
-        sh "cd homework/docker/app ;pwd "
-        sh "cd homework/docker/static ;pwd "
+        sh "cd homework; cp -f app.war docker/app ;docker build -t wis/app1:$BUILD_NUMBER docker/app "
+        sh "kind load docker-image wis/app1:$BUILD_NUMBER"
+        sh "cd homework; cp -rf static docker/static ;docker build -t wis/static:$BUILD_NUMBER  docker/static "
+        sh "kind load docker-image wis/static:$BUILD_NUMBER"
         sh 'pwd'
         sh 'cd homework'
         sh 'pwd'
