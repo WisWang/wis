@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # install docker
 yum install -y yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -35,8 +37,10 @@ alias k='kubectl'
 export PATH=~/.kubectx:\$PATH
 FOE
 
+# 
+
 k label node kind-control-plane ingress-ready=true
 
 
-
+echo "$(k describe node |grep InternalIP |awk '{print $NF}') www.wis.com static.wis.com" >> /etc/hosts
 

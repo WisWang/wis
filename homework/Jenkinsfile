@@ -1,0 +1,27 @@
+node {
+
+    git url: 'https://github.com/WisWang/wis', branch: 'master'
+    def version=env.BUILD_NUMBER
+    def tagName='wis.com/frog/flask-demo:'+env.BUILD_NUMBER
+
+    stage('docker build') {
+        sh "echo "
+        sh 'pwd'
+        sh 'ls -al'
+        sh 'echo $BUILD_NUMBER'
+    }
+    stage('dev') {
+        echo ""
+        sh "echo dev stage pass"
+
+    }
+    stage('test') {
+        sh "echo test stage pass"
+    }
+    stage('prod') {
+        sh "sudo ansible-playbook demo.yml -e tagName=$tagName"
+        sh "echo deploy to prod"
+    }
+
+
+}

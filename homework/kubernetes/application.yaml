@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  labels:
+    app: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      initContainers:
+      - image: wis/app1:v1
+        name: app-war
+        command: ["/bin/sh","-c","cp -r /opt/*.war /app/"]
+        volumeMounts:
+        - mountPath: /app
+          name: app-volume
+      containers:
+      - name: app1
+        image: jmalloc/echo-server
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /opt/
+          name: app-war
+      volumes:
+      - name: app-volume
+        emptyDir: {} 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: app1

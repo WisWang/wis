@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static
+  labels:
+    app: static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static
+  template:
+    metadata:
+      labels:
+        app: static
+    spec:
+      initContainers:
+      - image: wis/static:v1
+        name: app-static
+        command: ["/bin/sh","-c","cp -r /opt/* /app/"]
+        volumeMounts:
+        - mountPath: /app
+          name: app-volume
+      containers:
+      - name: static
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: app-volume
+      volumes:
+      - name: app-volume
+        emptyDir: {} 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: static
