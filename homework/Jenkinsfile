@@ -4,14 +4,16 @@ node {
     def version=env.BUILD_NUMBER
     def tagName='wis.com/frog/flask-demo:'+env.BUILD_NUMBER
 
-    stage('docker build') {
+    stage('docker image build') {
         sh "echo "
+        sh 'pwd'
+        sh 'cd homework'
         sh 'pwd'
         sh 'ls -al'
         sh 'echo $BUILD_NUMBER'
     }
     stage('dev') {
-        echo ""
+        echo "tag docker image dev pass"
         sh "echo dev stage pass"
 
     }
