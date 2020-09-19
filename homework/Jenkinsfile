@@ -19,7 +19,6 @@ node {
         sh "echo test stage pass"
     }
     stage('prod') {
-        sh "sudo ansible-playbook demo.yml -e tagName=$tagName"
         sh "echo deploy to prod"
     }
 
