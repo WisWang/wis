@@ -28,7 +28,7 @@ spec:
         - containerPort: 8080
         volumeMounts:
         - mountPath: /opt/
-          name: app-war
+          name: app-volume
       volumes:
       - name: app-volume
         emptyDir: {} 

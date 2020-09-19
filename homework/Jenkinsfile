@@ -1,19 +1,10 @@
 node {
-
     git url: 'https://github.com/WisWang/wis', branch: 'master'
-    def version=env.BUILD_NUMBER
-    def tagName='wis.com/frog/flask-demo:'+env.BUILD_NUMBER
-
     stage('docker image build') {
         sh "cd homework; cp -f app.war docker/app ;docker build -t wis/app1:$BUILD_NUMBER docker/app "
         sh "kind load docker-image wis/app1:$BUILD_NUMBER"
         sh "cd homework; cp -rf static docker/static ;docker build -t wis/static:$BUILD_NUMBER  docker/static "
-        sh "kind load docker-image wis/static:$BUILD_NUMBER"
-        sh 'pwd'
-        sh 'cd homework'
-        sh 'pwd'
-        sh 'ls -al'
-        sh 'echo $BUILD_NUMBER'
+        sh "kind load docker-image wis/static:$BUILD_NUMBER"        
     }
     stage('dev') {
         echo "tag docker image dev pass"
