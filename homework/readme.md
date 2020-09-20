@@ -7,7 +7,9 @@ The environment is :
 centos-release-7-6.1810.2.el7.centos.x86_64
 ```
 
-# Init os
+# DEV/QA env build
+
+## Init os
 
 Below command should use root.
 
@@ -17,3 +19,8 @@ cd wis/homework
 ./init.sh
 ./k8s.sh
 ```
+
+Then use `https://github.com/WisWang/wis/homework/Jenkinsfile` on Jenkins to build pipeline.
+
+
+# Production

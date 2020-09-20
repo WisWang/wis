@@ -29,9 +29,15 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: app-volume
+        - mountPath: /etc/app/
+          name: app-config
       volumes:
       - name: app-volume
         emptyDir: {} 
+      - name: app-config
+        configMap:
+          defaultMode: 420
+          name: app-config
 ---
 apiVersion: v1
 kind: Service
