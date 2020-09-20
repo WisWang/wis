@@ -45,5 +45,5 @@ Then use `https://github.com/WisWang/wis/homework/Jenkinsfile` on Jenkins to bui
 ## 日志
 
 日志可以参考下面这个架构：
-![日志架构](https://img2018.cnblogs.com/blog/635909/201810/635909-20181030215145249-2133758473.jpg "log")
+![日志架构](https://img2018.cnblogs.com/blog/635909/201810/635909-20181030215156631-2078677630.jpg "log")
 非常重要的一个点就是要通过消息队列来解耦日志收集和日志分析。
