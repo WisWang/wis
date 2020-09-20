@@ -9,7 +9,7 @@ node {
         sh "kind load docker-image wis/app1:$BUILD_NUMBER"
         sh """
             cd homework
-            sh "echo $BUILD_NUMBER > static/version.html"
+            echo $BUILD_NUMBER > static/version.html
             cp -rf static docker/static
             docker build -t wis/static:$BUILD_NUMBER  docker/static 
             """
