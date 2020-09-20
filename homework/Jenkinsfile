@@ -18,7 +18,8 @@ node {
     stage('dev') {
         sh """
             sudo /root/.kubectx/kubens dev
-            sudo kubectl get pod
+            sudo kubectl set image deployment/app1 app-war=wis/app1:$BUILD_NUMBER
+            sudo kubectl set image deployment/static app-static=wis/static:$BUILD_NUMBER
         """
         echo "tag docker image dev pass"
         echo "dev stage pass"
