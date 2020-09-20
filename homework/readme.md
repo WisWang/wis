@@ -47,5 +47,5 @@ Monitoring can be roughly divided into four aspects: infrastructure , applicatio
 ## Log
 
 Log can refer to the following architecture:
-![Log architecture](https://img2018.cnblogs.com/blog/635909/201810/635909-20181030215156631-2078677630.jpg "log")
+![Log architecture](https://raw.githubusercontent.com/WisWang/wis/master/homework/static/log.jpg "log")
 Log architecture A very important point is to decouple log collection and log analysis through the message queue (kafka).
