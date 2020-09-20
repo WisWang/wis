@@ -1,21 +1,35 @@
 node {
     git url: 'https://github.com/WisWang/wis', branch: 'master'
     stage('docker image build') {
-        sh "cd homework; cp -f app.war docker/app ;docker build -t wis/app1:$BUILD_NUMBER docker/app "
+        sh """
+            cd homework
+            cp -f app.war docker/app
+            docker build -t wis/app1:$BUILD_NUMBER docker/app 
+            """
         sh "kind load docker-image wis/app1:$BUILD_NUMBER"
-        sh "cd homework; cp -rf static docker/static ;docker build -t wis/static:$BUILD_NUMBER  docker/static "
+        sh """
+            cd homework
+            sh "echo $BUILD_NUMBER > static/version.html"
+            cp -rf static docker/static
+            docker build -t wis/static:$BUILD_NUMBER  docker/static 
+            """
         sh "kind load docker-image wis/static:$BUILD_NUMBER"        
     }
     stage('dev') {
+        sh """
+            sudo kubens dev
+            sudo kubectl get pod
+        """
         echo "tag docker image dev pass"
-        sh "echo dev stage pass"
+        echo "dev stage pass"
 
     }
     stage('test') {
-        sh "echo test stage pass"
+        echo "tag docker image dev pass"
+        echo "test stage pass"
     }
     stage('prod') {
-        sh "echo deploy to prod"
+        echo "deploy to prod"
     }
 
 
