@@ -40,11 +40,64 @@ spec:
           defaultMode: 420
           name: app-config
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static
+  namespace: test
+  labels:
+    app: static
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: static
+  template:
+    metadata:
+      labels:
+        app: static
+    spec:
+      initContainers:
+      - image: wis/static:v1
+        name: app-static
+        command: ["/bin/sh","-c","cp -r /opt/* /app/"]
+        volumeMounts:
+        - mountPath: /app
+          name: app-volume
+      containers:
+      - name: static
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: app-volume
+        - mountPath: /etc/app/
+          name: app-config
+      volumes:
+      - name: app-volume
+        emptyDir: {} 
+      - name: app-config
+        configMap:
+          defaultMode: 420
+          name: app-config
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: static
   namespace: dev
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: static
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: static
+  namespace: test
 spec:
   ports:
     - port: 80

@@ -30,15 +30,74 @@ spec:
         volumeMounts:
         - mountPath: /opt/
           name: app-volume
+        - mountPath: /etc/app/
+          name: app-config
       volumes:
       - name: app-volume
         emptyDir: {} 
+      - name: app-config
+        configMap:
+          defaultMode: 420
+          name: app-config
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  namespace: test
+  labels:
+    app: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      initContainers:
+      - image: wis/app1:v1
+        name: app-war
+        command: ["/bin/sh","-c","cp -r /opt/*.war /app/"]
+        volumeMounts:
+        - mountPath: /app
+          name: app-volume
+      containers:
+      - name: app1
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /opt/
+          name: app-volume
+        - mountPath: /etc/app/
+          name: app-config
+      volumes:
+      - name: app-volume
+        emptyDir: {} 
+      - name: app-config
+        configMap:
+          defaultMode: 420
+          name: app-config
+--- 
 apiVersion: v1
 kind: Service
 metadata:
   name: app1
   namespace: dev
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: app1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1
+  namespace: test
 spec:
   ports:
     - port: 80
