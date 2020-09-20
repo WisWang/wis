@@ -17,7 +17,7 @@ node {
     }
     stage('dev') {
         sh """
-            sudo kubens dev
+            sudo /root/.kubectx/kubens dev
             sudo kubectl get pod
         """
         echo "tag docker image dev pass"
