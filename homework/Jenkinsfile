@@ -10,6 +10,7 @@ node {
         sh """
             cd homework
             echo $BUILD_NUMBER > static/version.html
+            zip static static
             cp -rf static docker/static
             docker build -t wis/static:$BUILD_NUMBER  docker/static 
             """
@@ -21,11 +22,18 @@ node {
             sudo kubectl set image deployment/app1 app-war=wis/app1:$BUILD_NUMBER
             sudo kubectl set image deployment/static app-static=wis/static:$BUILD_NUMBER
         """
+        echo "check is app pass unit test and intergration test"
         echo "tag docker image dev pass"
         echo "dev stage pass"
 
     }
     stage('test') {
+        sh """
+            sudo /root/.kubectx/kubens test
+            sudo kubectl set image deployment/app1 app-war=wis/app1:$BUILD_NUMBER
+            sudo kubectl set image deployment/static app-static=wis/static:$BUILD_NUMBER
+        """
+        echo "check if app pass accept test"
         echo "tag docker image dev pass"
         echo "test stage pass"
     }
