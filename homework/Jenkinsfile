@@ -22,6 +22,10 @@ node {
             sudo kubectl set image deployment/app1 app-war=wis/app1:$BUILD_NUMBER
             sudo kubectl set image deployment/static app-static=wis/static:$BUILD_NUMBER
         """
+        sh """
+            sleep 10
+            curl static.dev.wis.com/version.html
+        """
         echo "check is app pass unit test and intergration test"
         echo "tag docker image dev pass"
         echo "dev stage pass"
@@ -32,6 +36,10 @@ node {
             sudo /root/.kubectx/kubens test
             sudo kubectl set image deployment/app1 app-war=wis/app1:$BUILD_NUMBER
             sudo kubectl set image deployment/static app-static=wis/static:$BUILD_NUMBER
+        """
+        sh """
+            sleep 10
+            curl static.test.wis.com/version.html
         """
         echo "check if app pass accept test"
         echo "tag docker image dev pass"
