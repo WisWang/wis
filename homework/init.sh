@@ -44,3 +44,9 @@ k label node kind-control-plane ingress-ready=true
 
 echo "$(k describe node |grep InternalIP |awk '{print $NF}') www.wis.com static.wis.com" >> /etc/hosts
 
+# jenkins setup
+
+yum install java-1.8.0-openjdk
+yum install -y https://mirrors.aliyun.com/jenkins/redhat/jenkins-2.257-1.1.noarch.rpm
+systemctl start jenkins
+echo "jenkins ALL = (root) NOPASSWD: ALL" >> /etc/sudoers
