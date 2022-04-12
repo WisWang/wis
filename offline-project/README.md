@@ -302,3 +302,4 @@ kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get
 push all files/procedures in your local gitlab repo to remote github repo (e.g. https://github.com/your_github_id/go-web-hello-world)
 if this is for an interview session, please send it to bo.cui@ericsson.com, no later than two calendar days after the interview.
 
+https://github.com/WisWang/wis/tree/master/offline-project
